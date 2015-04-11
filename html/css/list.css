@@ -1,0 +1,21 @@
+/*
+Copyright (C) 2015 Nathan Crause - All rights reserved
+
+This file is part of Socialfeed
+
+Copying, modification, duplication in whole or in part without
+the express written consent of the copyright holder is
+expressly prohibited under the Berne Convention and the
+Buenos Aires Convention.
+*/
+/* 
+    Created on : Apr 10, 2015, 1:23:30 AM
+    Author     : Nathan Crause
+*/
+
+.media-list.socialfeed-list li.media {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
