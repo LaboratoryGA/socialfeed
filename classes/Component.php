@@ -33,15 +33,28 @@ class Component extends TemplaterComponentTmpl {
 	const OPT_TEMPLATE = 'template';
 	
 	/**
-	 * Legacy support - basically a provider using 'default' instance OR
-	 * referring to a "Mapping"
+	 * Used to define a list of all the feeds to pull in
 	 */
 	const OPT_SOURCE_FILTER = 'source_filter';
 	
+	/**
+	 * Suffix to each individual provider's template
+	 */
 	const OPT_TEMPLATE_SUFFIX = '_template';
 	
+	/**
+	 * Used to define the overall maximum number of posts
+	 */
 	const OPT_LIMIT = 'limit';
 	
+	/**
+	 * Used to define the individual source's maximum number of posts
+	 */
+	const OPT_LIMIT_PER = 'limit_per';
+	
+	/**
+	 * Used to define the "target" to all links in a post
+	 */
 	const OPT_LINK_TARGET = 'link_target';
 	
 	const ARG_POSTS_DATASRC = 'posts.datasrc';
@@ -49,6 +62,7 @@ class Component extends TemplaterComponentTmpl {
 	private static $DEFAULTS = [
 		self::OPT_TEMPLATE		=> 'socialfeed/list.html',
 		self::OPT_LIMIT			=> 10,
+		self::OPT_LIMIT_PER		=> 99,
 		self::OPT_LINK_TARGET	=> '_blank'
 	];
 	
@@ -73,21 +87,21 @@ class Component extends TemplaterComponentTmpl {
 //
 //			return '<pre>' . print_r($fb->getStream(), true) . '</pre>';
 			
+			$id = 'socialfeed-' . uniqid();
 			$args = [
+				'js_element_id.body'	=> $id,
+				'html_element_id.id'	=> $id,
 				self::ARG_POSTS_DATASRC	=> []
 			];
 			$engine = Template\Factory::fromComponent($this);
 			
-			foreach ($records = $this->getRecords($sources, $options[self::OPT_LIMIT]) as $record) {
-				foreach ($record->posts as $post) {
-					/* @var $post Data\Post */
-					$templateOption = $record->source->provider . self::OPT_TEMPLATE_SUFFIX;
-							
-					$args[self::ARG_POSTS_DATASRC][] = [
-						'post.+class'		=> "socialfeed-{$record->source->provider} {$post->getWrapperClassCSS()}",
-						'body.body_html'	=> $post->getHTML($options[$templateOption], $engine)
-					];
-				}
+			foreach ($records = $this->getRecords($sources, $options[self::OPT_LIMIT], $options[self::OPT_LIMIT_PER]) as $record) {
+				$templateOption = $record->source->provider . self::OPT_TEMPLATE_SUFFIX;
+
+				$args[self::ARG_POSTS_DATASRC][] = [
+					'post.+class'		=> "socialfeed-{$record->source->provider} {$record->post->getWrapperClassCSS()}",
+					'body.body_html'	=> emoji_unified_to_html($record->post->getHTML($options[$templateOption], $engine))
+				];
 			}
 			
 //			return '<pre>' . print_r($args, true) . ' </pre>';
@@ -186,31 +200,24 @@ class Component extends TemplaterComponentTmpl {
 	 * @param integer $limit the maximum number of records to return
 	 * @return array[Post]
 	 */
-	private function getRecords(array $sources, $limit) {
+	private function getRecords(array $sources, $limit, $limitPer) {
 		$records = [];
 		
-//		CRITICAL !!!
-//		
-//		This needs to be reworked to expose the records directly, otherwise
-//		we cannot sort and limit
-		
 		foreach ($sources as $source) {
-//			$records = array_merge($records, $this->getSourceRecords($source));
-			$records[] = (object) [
-				'source' => $source,
-				'posts' => $this->getSourceRecords($source)
-			];
+			foreach ($this->getSourceRecords($source, $limitPer) as $post) {
+				$records[] = (object) compact('source', 'post');
+			}
 		}
 		
 		// TODO: sort by date
 		
-		return $records;
+		return array_slice($records, 0, $limit);
 	}
 	
-	private function getSourceRecords(\stdClass $source) {
+	private function getSourceRecords(\stdClass $source, $limitPer) {
 		$cache = new Cache($source->provider, $source->name);
 		
-//		$cache->clear();
+		$cache->clear();
 		
 		if (!$cache->exists()) {
 			$stream = new Stream($source->provider, $source->name);
@@ -220,7 +227,7 @@ class Component extends TemplaterComponentTmpl {
 		
 //		die('Record: <pre>' . print_r($cache->get(), true) . '</pre>');
 		
-		return $cache->get();
+		return array_slice($cache->get(), 0, $limitPer);
 	}
 	
 }

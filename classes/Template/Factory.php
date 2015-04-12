@@ -20,7 +20,7 @@ use Claromentis\Socialfeed\Template\Engine\Component;
  * This factory class provides several utility  methods for getting a template
  * engine instance.
  *
- * @author fiveht
+ * @author Nathan Crause
  */
 class Factory {
 	

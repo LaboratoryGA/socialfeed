@@ -26,10 +26,12 @@ $cfg_socialfeed = new Configuration();
 $cfg_socialfeed->addFacebook()
 		->setAppID('210301132424295')
 		->setAppSecret('75407e2280fd24eb147c3d08cd7e340c')
-		->setResource('Claromentis');
+		->setResource('laboratory.ga');
 
-//$cfg_socialfeed->addTwitter()
-//		->setBlahblahfishpaste();
-//
+$cfg_socialfeed->addTwitter()
+		->setConsumerKey('3rVGexalmyASGnADj3osotm1u')
+		->setConsumerSecret('9Fi1oJ9H6fZOZ3xYhwsbZ3LP1icn0eHKSmOIbqKijhRfDCl5o0')
+		->setScreenName('LaboratoryGa');
+
 //$cfg_socialfeed->addProvider('linkedin')
 //		->setYakityShmakkity();

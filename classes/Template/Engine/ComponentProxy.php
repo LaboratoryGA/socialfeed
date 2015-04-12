@@ -19,7 +19,7 @@ use TemplaterComponentTmpl;
  * This class provides a means of accessing the "CallTemplater" method of a
  * given component.
  *
- * @author fiveht
+ * @author Nathan Crause
  */
 class ComponentProxy extends TemplaterComponentTmpl {
 	

@@ -19,7 +19,7 @@ use Claromentis\Socialfeed\Template\Engine;
 /**
  * This class provides a template engine based on a templater component object
  *
- * @author fiveht
+ * @author Nathan Crause
  */
 class Component implements Engine {
 	

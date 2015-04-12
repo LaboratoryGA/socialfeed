@@ -18,7 +18,7 @@ use Claromentis\Socialfeed\Template\Engine;
 use Claromentis\Socialfeed\Template\Factory;
 
 /**
- * Description of Facebook
+ * Concrete implementation of a Facebook post
  *
  * @author Nathan Crause
  */
@@ -77,7 +77,9 @@ class Facebook extends Post {
 					$this->markup($this->getRaw()->message,
 							$this->getRaw()->message_tags, $options), $options),
 			// default to displaying no media
-			'media.visible'		=> false
+			'media.visible'		=> false,
+			'origin.href'		=> 'https://www.facebook.com/' . $this->getRaw()->object_id,
+			'origin.target'		=> $options[\Claromentis\Socialfeed\Component::OPT_LINK_TARGET] ?: '_blank'
 		];
 		
 		$this->addTypeSpecificArgs($args, $options);
@@ -107,8 +109,6 @@ class Facebook extends Post {
 				$args['caption_title.visible'] = !empty($args['caption_title.body']);
 				$args['caption_description.body'] = $this->getRaw()->description;
 				$args['caption_description.visible'] = !empty($this->getRaw()->description);
-				$args['origin.href'] = 'https://www.facebook.com/' . $this->getRaw()->object_id;
-				$args['origin.target'] = $options[\Claromentis\Socialfeed\Component::OPT_LINK_TARGET] ?: '_blank';
 				
 				break;
 				

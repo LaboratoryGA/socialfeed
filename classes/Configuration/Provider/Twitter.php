@@ -35,7 +35,40 @@ class Twitter implements Provider {
 	}
 	
 	public function connect() {
-		throw new \Exception('Not yet implemented');
+		return new \Claromentis\Socialfeed\Data\Provider\Twitter($this);
+	}
+	
+	private $consumerKey;
+	
+	public function getConsumerKey() {
+		return $this->consumerKey;
+	}
+
+	public function setConsumerKey($consumerKey) {
+		$this->consumerKey = $consumerKey;
+		return $this;
+	}
+
+	private $consumerSecret;
+	
+	public function getConsumerSecret() {
+		return $this->consumerSecret;
+	}
+
+	public function setConsumerSecret($consumerSecret) {
+		$this->consumerSecret = $consumerSecret;
+		return $this;
+	}
+	
+	private $screenName;
+	
+	public function getScreenName() {
+		return $this->screenName;
+	}
+
+	public function setScreenName($screenName) {
+		$this->screenName = $screenName;
+		return $this;
 	}
 
 }
