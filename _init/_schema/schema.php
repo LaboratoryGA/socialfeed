@@ -35,16 +35,4 @@ $db->CreateIndex('socialfeed_auth', 'socialfeed_auth_provider_instance', array(
 	'instance'
 ));
 
-// this table contains the social media content
-//$db->CreateTable('socialfeed_posts', array(
-//	'id'			=> 'IDENTITY',
-//	'provider'		=> 'VARCHAR(255) NOT NULL',
-//	'instance'		=> 'VARCHAR(255) NOT NULL'
-//), true);
-//
-//$db->CreateIndex('socialfeed_posts', 'socialfeed_posts_provider_instance', array(
-//	'provider',
-//	'instance'
-//));
-
 $migrations->SetVersion('20150323');

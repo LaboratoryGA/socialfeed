@@ -23,6 +23,8 @@ Configuration::registerProvider('youtube', 'Claromentis\SocialFeed\Configuration
 
 $cfg_socialfeed = new Configuration();
 
+$cfg_socialfeed->setPurgeOnLegacy(true);
+
 $cfg_socialfeed->addFacebook()
 		->setAppID('210301132424295')
 		->setAppSecret('75407e2280fd24eb147c3d08cd7e340c')

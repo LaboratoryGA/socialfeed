@@ -121,6 +121,39 @@ class Configuration {
 		return array_keys($this->providerRegistries[$provider]);
 	}
 	
+	private $purgeOnLegacy;
+	
+	/**
+	 * Checks if any previous configurations should be purged if legacy
+	 * configuration options are detected.
+	 * 
+	 * @return boolean <code>true</code> if the existance of legacy should
+	 * cause a configuration purge
+	 */
+	public function getPurgeOnLegacy() {
+		return $this->purgeOnLegacy;
+	}
+
+	/**
+	 * Toggles whether a configuration purge should occur if legacy
+	 * configurations are detected.
+	 * 
+	 * @param boolean $purgeOnLegacy <code>true</code> if purge should occur
+	 * @return \Claromentis\Socialfeed\Configuration
+	 */
+	public function setPurgeOnLegacy($purgeOnLegacy) {
+		$this->purgeOnLegacy = $purgeOnLegacy;
+		return $this;
+	}
+	
+	/**
+	 * Removes all configuration options, excluding provider name mappings.
+	 */
+	public function purge() {
+		$this->aliases = [];
+		$this->providerRegistries = [];
+	}
+	
 	/**
 	 * This method provides a shortcode to <code>addProvider()</code>. Invoking
 	 * a method named <code>addFacebook</code> would cause an internal
