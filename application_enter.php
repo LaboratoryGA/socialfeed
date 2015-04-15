@@ -40,7 +40,7 @@ if ((legacy_facebook_exists() || legacy_twitter_exists()) && $cfg_socialfeed->ge
 // check for legacy facebook configuration
 if (legacy_facebook_exists()) {
 	// add peculiar "fb" reference used in legacy implementation
-	Configuration::registerProvider('fb', 'Claromentis\SocialFeed\Configuration\Provider\Facebook');
+	\Claromentis\Socialfeed\Configuration::registerProvider('fb', 'Claromentis\SocialFeed\Configuration\Provider\Facebook');
 	
 	foreach ($GLOBALS['cfg_social_stream_facebook_page'] as $page) {
 		$resource = trim($page, '/');
@@ -49,12 +49,17 @@ if (legacy_facebook_exists()) {
 				->setAppID($GLOBALS['cfg_facebook_app_id'])
 				->setAppSecret($GLOBALS['cfg_facebook_app_secret'])
 				->setResource($resource);
+		// also add in the legacy "FB" reference (but leave it as "default")
+		$cfg_socialfeed->addProviderInstance('fb')
+				->setAppID($GLOBALS['cfg_facebook_app_id'])
+				->setAppSecret($GLOBALS['cfg_facebook_app_secret'])
+				->setResource($resource);
 	}
 }
 
 // check for legacy twitter configuration
 if (legacy_twitter_exists()) {
-	foreach ($GLOBALS['cfg_social_stream_facebook_page'] as $screenName) {
+	foreach ($GLOBALS['cfg_social_stream_twitter_streams'] as $screenName) {
 		$cfg_socialfeed->addTwitter("legacy-twitter-{$screenName}")
 				->setConsumerKey($GLOBALS['cfg_twitter_consumer_key'])
 				->setConsumerSecret($GLOBALS['cfg_twitter_consumer_secret'])
