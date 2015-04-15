@@ -10,6 +10,7 @@
  * expressly prohibited under the Berne Convention and the
  * Buenos Aires Convention.
  */
+die("DO NOT RUN!");
 
 /* @var $db \Claromentis\Core\DAL\Schema\SchemaDb */
 

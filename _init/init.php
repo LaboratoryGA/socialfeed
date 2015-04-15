@@ -10,6 +10,7 @@
  * expressly prohibited under the Berne Convention and the
  * Buenos Aires Convention.
  */
+die("DO NOT RUN!");
 
 if (!defined('INSTALL_PROGRESS')) {
 	die('This file cannot be executed directly');
