@@ -209,7 +209,12 @@ class Component extends TemplaterComponentTmpl {
 			}
 		}
 		
-		// TODO: sort by date
+		usort($records, function($a, $b) {
+			if ($a->post->getDate()->getTimestamp() > $b->post->getDate()->getTimestamp()) {
+				return -1;
+			}
+			return 1;
+		});
 		
 		return array_slice($records, 0, $limit);
 	}
