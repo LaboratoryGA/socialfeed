@@ -50,9 +50,31 @@ class Facebook extends Post {
 		return null;
 	}
 	
-	private function markup($content, $tags) {
+	private function markup($content, $tags, array $options) {
 		$offset = 0;
 		$html = '';
+		$cut = false;
+		
+		if (key_exists(\Claromentis\Socialfeed\Component::OPT_POST_LENGTH, $options)
+				&& strlen($content) > ($max = $options[\Claromentis\Socialfeed\Component::OPT_POST_LENGTH])) {
+			$cut = true;
+			$hack = substr($content, 0, $max);
+			
+			// if there are no whitespaces, just set the content to the hacked-off
+			// string, and exit
+			if (!preg_match('/s/', $hack)) {
+				$content = $hack;
+			}
+			else {
+				preg_match_all('/\s/', $hack, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+//				die('Matches: <pre>' . print_r($matches, true) . '</pre>');
+				
+				// set content up to the LAST whitespace detected
+				$content = substr($hack, 0, end($matches)[0][1]);
+			}
+			
+//			die("Content: '$content'");
+		}
 		
 		foreach ($tags as $tag) {
 //			die('<pre>' . print_r($tag, true) . '</pre>');
@@ -64,6 +86,10 @@ class Facebook extends Post {
 			$offset = $tag->offset + $tag->length;
 		}
 		$html .= substr($content, $offset);
+		
+		if ($cut) {
+			$html .= '&hellip;';
+		}
 		
 		return str_replace("\n", "<br>", $html);
 	}

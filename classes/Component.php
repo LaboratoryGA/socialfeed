@@ -53,6 +53,11 @@ class Component extends TemplaterComponentTmpl {
 	const OPT_LIMIT_PER = 'limit_per';
 	
 	/**
+	 * Used to define the maximum number of characters of a post.
+	 */
+	const OPT_POST_LENGTH = 'post_length';
+	
+	/**
 	 * Used to define the "target" to all links in a post
 	 */
 	const OPT_LINK_TARGET = 'link_target';
@@ -100,7 +105,7 @@ class Component extends TemplaterComponentTmpl {
 
 				$args[self::ARG_POSTS_DATASRC][] = [
 					'post.+class'		=> "socialfeed-{$record->source->provider} {$record->post->getWrapperClassCSS()}",
-					'body.body_html'	=> emoji_unified_to_html($record->post->getHTML($options[$templateOption], $engine))
+					'body.body_html'	=> emoji_unified_to_html($record->post->getHTML($options[$templateOption], $engine, $options))
 				];
 			}
 			
