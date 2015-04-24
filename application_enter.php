@@ -12,6 +12,7 @@
  */
 \Claromentis\Socialfeed\ClassLoader::register('Facebook', realpath(__DIR__ . '/lib/facebook-php-sdk-v4-4.0-dev/src'));
 \Claromentis\Socialfeed\ClassLoader::register('TwitterOAuth', realpath(__DIR__ . '/lib/TwitterOAuth-2/src'), true);
+\Claromentis\Socialfeed\ClassLoader::register('LinkedIn', realpath(__DIR__ . '/lib/PHP-LinkedIn-SDK-master'));
 
 function legacy_facebook_exists() {
 	return key_exists('cfg_social_stream_facebook_page', $GLOBALS)

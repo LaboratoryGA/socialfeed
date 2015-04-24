@@ -35,5 +35,12 @@ $cfg_socialfeed->addTwitter()
 		->setConsumerSecret('9Fi1oJ9H6fZOZ3xYhwsbZ3LP1icn0eHKSmOIbqKijhRfDCl5o0')
 		->setScreenName('LaboratoryGa');
 
+$cfg_socialfeed->addLinkedIn()
+		->setApiKey('75getsqievrak2')
+		->setSecretKey('0rZu9La9ISTFWM2r')
+		->setUserToken('2ea34eb5-e6da-4eae-832b-bcaae1da1eb0')
+		->setUserSecret('98c75c5f-84c8-4eba-934d-27fbfdbf9116')
+		/*->setWhat()*/;
+
 //$cfg_socialfeed->addProvider('linkedin')
 //		->setYakityShmakkity();
